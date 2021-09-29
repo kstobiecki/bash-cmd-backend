@@ -4,7 +4,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Logger } from '@nestjs/common';
 import { BashResultDto, BashCommandDto } from './dto';
 import { BashService } from './bash.service';
 
@@ -24,6 +24,9 @@ export class BashController {
   })
   @HttpCode(HttpStatus.OK)
   async runBashCommand(@Body() cmd: BashCommandDto): Promise<BashResultDto> {
+    Logger.debug({
+      message: `[runBashCommand] Requested to run bash command`,
+    });
     return this.bashService.runCommand(cmd);
   }
 }
