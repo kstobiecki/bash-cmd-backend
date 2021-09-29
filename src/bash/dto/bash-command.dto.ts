@@ -5,5 +5,5 @@ export class BashCommandDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  cmd: string;
+  readonly cmd!: string;
 }
