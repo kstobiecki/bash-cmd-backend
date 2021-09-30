@@ -3,6 +3,7 @@ import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import {
@@ -12,9 +13,12 @@ import {
   HttpStatus,
   Post,
   Logger,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { BashResultDto, BashCommandDto } from './dto';
 import { BashService } from './bash.service';
+import { ListAllEntitiesInterface } from '../common/interfaces';
 
 @ApiTags('Bash')
 @ApiBearerAuth()
@@ -39,5 +43,24 @@ export class BashController {
       message: `[runBashCommand] Requested to run bash command`,
     });
     return this.bashService.runCommand(cmd);
+  }
+
+  @Get('/results')
+  @ApiOperation({
+    summary: 'Get all results',
+  })
+  @ApiOkResponse({
+    description: 'Successfully returned results',
+    type: BashResultDto,
+  })
+  @ApiQuery({ name: 'limit', type: Number })
+  @HttpCode(HttpStatus.OK)
+  async getResults(
+    @Query() query: ListAllEntitiesInterface,
+  ): Promise<BashResultDto[]> {
+    Logger.debug({
+      message: `[getResults] Requested for results`,
+    });
+    return this.bashService.getResults(+query.limit);
   }
 }

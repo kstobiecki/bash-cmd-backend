@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { BashCommandDto, BashResultDto } from './dto';
 import { exec } from 'child_process';
-import { ErrorMessageEnum } from '../enums/error-message.enum';
+import { ErrorMessageEnum } from '../common/enums';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Bash, BashDocument } from './schemas/bash.schema';
@@ -41,5 +41,9 @@ export class BashService {
         resolve(stdout);
       });
     });
+  }
+
+  async getResults(limit: number): Promise<BashResultDto[]> {
+    return this.bashModel.find().sort({ createdAt: -1 }).limit(limit).exec();
   }
 }

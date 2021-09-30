@@ -7,6 +7,9 @@ export type BashDocument = Bash & Document;
 export class Bash {
   @Prop({ required: true })
   result!: string;
+
+  @Prop({ default: Date.now })
+  createdAt!: Date;
 }
 
 export const BashSchema = SchemaFactory.createForClass(Bash);
