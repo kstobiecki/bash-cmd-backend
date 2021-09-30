@@ -53,7 +53,7 @@ export class BashController {
     description: 'Successfully returned results',
     type: BashResultDto,
   })
-  @ApiQuery({ name: 'limit', type: Number })
+  @ApiQuery({ name: 'limit', type: Number, required: false })
   @HttpCode(HttpStatus.OK)
   async getResults(
     @Query() query: ListAllEntitiesInterface,
@@ -61,6 +61,6 @@ export class BashController {
     Logger.debug({
       message: `[getResults] Requested for results`,
     });
-    return this.bashService.getResults(+query.limit);
+    return this.bashService.getResults(query.limit && +query.limit);
   }
 }

@@ -43,7 +43,9 @@ export class BashService {
     });
   }
 
-  async getResults(limit: number): Promise<BashResultDto[]> {
-    return this.bashModel.find().sort({ createdAt: -1 }).limit(limit).exec();
+  async getResults(limit = 10): Promise<BashResultDto[]> {
+    return this.bashModel
+      .aggregate([{ $limit: limit }, { $sort: { createdAt: -1 } }])
+      .exec();
   }
 }

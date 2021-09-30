@@ -1,3 +1,3 @@
 export interface ListAllEntitiesInterface {
-  limit: number;
+  limit?: number;
 }
