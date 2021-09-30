@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  main:
+    container_name: main
+    build:
+      context: .
+      target: production
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 9000:9000
+    command: npm run start
+    env_file:
+      - .env
+    networks:
+      - webnet
+    links:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - webnet
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+
+volumes:
+  mongodb-data:
+    name: mongodb-data
+networks:
+  webnet:

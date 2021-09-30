@@ -1,4 +1,5 @@
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
@@ -29,8 +30,11 @@ export class BashController {
     description: 'Successfully run command',
     type: BashResultDto,
   })
+  @ApiBadRequestResponse({
+    description: 'Command cannot be run',
+  })
   @HttpCode(HttpStatus.OK)
-  async runBashCommand(@Body() cmd: BashCommandDto): Promise<BashResultDto> {
+  async runCommand(@Body() cmd: BashCommandDto): Promise<BashResultDto> {
     Logger.debug({
       message: `[runBashCommand] Requested to run bash command`,
     });
