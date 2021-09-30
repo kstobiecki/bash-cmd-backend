@@ -16,7 +16,7 @@ export class BashService {
       Logger.debug({
         message: `[runCommand] successfully run command ${cmd}`,
       });
-      const createdResult = new this.bashModel({ result });
+      const createdResult = new this.bashModel({ cmd, result });
       return createdResult.save();
     } catch (errorMessage) {
       Logger.debug({

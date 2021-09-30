@@ -6,6 +6,9 @@ export type BashDocument = Bash & Document;
 @Schema()
 export class Bash {
   @Prop({ required: true })
+  cmd!: string;
+
+  @Prop({ required: true })
   result!: string;
 
   @Prop({ default: Date.now })
