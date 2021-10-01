@@ -18,6 +18,11 @@ $ docker-compose up -d
 Runs the app in the production mode.\
 Open [http://localhost:9000](http://localhost:9000) to see healthcheck.
 
+## Swagger
+
+You can test api using Swagger.
+Open [http://localhost:9000/api](http://localhost:9000/api) to see Swagger app.
+
 ## Installation
 
 ```bash
