@@ -10,7 +10,7 @@ import { Bash, BashDocument } from './schemas/bash.schema';
 export class BashService {
   constructor(@InjectModel(Bash.name) private bashModel: Model<BashDocument>) {}
 
-  async runCommand({ cmd }: BashCommandDto): Promise<BashResultDto> {
+  public async runCommand({ cmd }: BashCommandDto): Promise<BashResultDto> {
     try {
       const result: string = await this.execCommand(cmd);
       Logger.debug({
@@ -29,7 +29,13 @@ export class BashService {
     }
   }
 
-  async execCommand(cmd: string): Promise<string> {
+  public async getResults(limit = 10): Promise<BashResultDto[]> {
+    return this.bashModel
+      .aggregate([{ $limit: limit }, { $sort: { createdAt: -1 } }])
+      .exec();
+  }
+
+  private async execCommand(cmd: string): Promise<string> {
     return new Promise((resolve, reject) => {
       exec(cmd, (error, stdout, stderr) => {
         if (error) {
@@ -41,11 +47,5 @@ export class BashService {
         resolve(stdout);
       });
     });
-  }
-
-  async getResults(limit = 10): Promise<BashResultDto[]> {
-    return this.bashModel
-      .aggregate([{ $limit: limit }, { $sort: { createdAt: -1 } }])
-      .exec();
   }
 }
