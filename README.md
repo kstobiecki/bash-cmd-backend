@@ -3,7 +3,7 @@
 This project is the backend part of bash cmd handler built for educational purposes.
 
 ## Running application in Docker Container
-create .env file with defaul values: 
+create .env file with default values: 
 
 ```
 PORT=9000
@@ -12,7 +12,7 @@ FRONTEND_URL=http://localhost
 ```
 Then you need to run a command:
 ```bash
-$ docker-compose up -d
+$ docker-compose up -d --build
 ```
 
 Runs the app in the production mode.\
